@@ -1,0 +1,7 @@
+#article-new-arrival-all > div.c-cardCase.is-multiCell.is-2line > div > div > div.c-card-header > a > div > img {
+    filter: blur(9px);
+}
+
+#article-new-arrival-all > div.c-cardCase.is-multiCell.is-2line > div > div > div.c-card-header > a > div > img:hover {
+    filter: none;
+}
