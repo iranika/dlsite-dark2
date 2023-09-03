@@ -48,7 +48,9 @@
       "resources": [
         "https://www.dlsite.com/*",
         "https://dlsite.com/*",
-        "https://ci-en.net/*"
+        "https://ci-en.net/*",
+        "/*.js",
+        "/*.css"
       ],
       "matches": [
         "https://www.dlsite.com/*",

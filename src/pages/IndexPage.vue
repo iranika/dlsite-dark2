@@ -1,7 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    
-    <q-card style="width:800px">
+    <div style="width:800px">
+      <q-card style="width: 100%;">
       <q-card-section>
         <div>明るさ</div>
         <q-slider
@@ -22,7 +22,14 @@
         -->
       </q-card-actions>
     </q-card>
-    
+
+    <q-card style="width:100%; margin-top: 10px;">
+      <q-card-section>
+        <div>ギフトページへのアクセスボタン</div>
+        <q-checkbox @click="sendSave" v-model="gift_button" label="作品ページにボタンを表示する"></q-checkbox>
+      </q-card-section>
+    </q-card>
+    </div>
   </q-page>
 </template>
 
@@ -38,13 +45,21 @@ export default defineComponent({
     const sendSave = async()=>{
       //$q.bex.send('log', { message: 'Hello World!' });
       const bright = await $q.bex.send('storage.set', { key: 'bright', value: brightness.value });
-      console.log('bright:',bright)
+      console.log('bright:',bright);
+      const gift = await $q.bex.send('storage.set', { key: 'gift_button', value: gift_button.value });
+      console.log('gift', gift);
     }
-    let brightness = ref(0.7);
+    let brightness = ref(0.9);
+    let gift_button = ref(false);
 
     $q.bex.send('storage.get', {key: 'bright'}).then((res)=>{
-      brightness.value = res.data
+      brightness.value = (res.data == undefined) ? 0.9 : res.data;
       console.log('get bright:', res.data);
+    })
+
+    $q.bex.send('storage.get', {key: 'gift_button'}).then((res)=>{
+      gift_button.value = (res.data == undefined) ? false : res.data;
+      console.log('get gift_button:', res.data);
     })
 
     const saveDefault = async ()=>{
@@ -52,7 +67,7 @@ export default defineComponent({
       sendSave();
     }
 
-    return { sendSave, brightness, saveDefault };
+    return { sendSave, brightness, saveDefault, gift_button };
   }
 });
 </script>
